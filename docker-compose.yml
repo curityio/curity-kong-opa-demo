@@ -1,0 +1,49 @@
+version: '3.7'
+services:
+  idsvr:
+    image: curity.azurecr.io/curity/idsvr:latest
+    container_name: idsvr
+    ports:
+    - "6749:6749"
+    - "8443:8443"
+    environment:
+      PASSWORD: Pa$$w0rd1! ##admin user password
+    # volumes: 
+    # - ./curity/example_config.xml:/opt/idsvr/etc/init/example_config.xml
+  kong:
+    build: ./kong-image
+    container_name: kong
+    volumes:
+      - ./kong-image/kong.yml:/usr/local/kong/declarative/kong.yml
+    ports:
+     - "8000:8000"
+     - "8001:8001"
+     - "8442:8443"
+     - "8444:8444"
+    environment:
+     - KONG_DATABASE=off
+     - KONG_DECLARATIVE_CONFIG=/usr/local/kong/declarative/kong.yml
+     - KONG_PLUGINS=bundled,phantom-token,opa
+     - KONG_LOG_LEVEL=debug
+     - KONG_PROXY_ACCESS_LOG=/dev/stdout
+     - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+     - KONG_PROXY_ERROR_LOG=/dev/stderr
+     - KONG_ADMIN_ERROR_LOG=/dev/stderr
+     - KONG_PROXY_LISTEN=0.0.0.0:8000, 0.0.0.0:8443 ssl
+     - KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl
+  api:
+    build: ./api
+    ports: 
+      - "8080:8080"
+    container_name: api
+    hostname: api
+    volumes: 
+      - ./api/server/records.json:/app/records.json
+  opa:
+    image: openpolicyagent/opa:latest
+    container_name: opa
+    ports:
+    - "8181:8181"
+    volumes:
+      - ./opa/policies/records.rego:/records
+    command: "run --server --addr :8181 --log-level debug records"
