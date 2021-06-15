@@ -7,9 +7,9 @@ services:
     - "6749:6749"
     - "8443:8443"
     environment:
-      PASSWORD: Pa$$w0rd1! ##admin user password
+      PASSWORD: Passw0rd1! ##admin user password
     # volumes: 
-    # - ./curity/example_config.xml:/opt/idsvr/etc/init/example_config.xml
+    # - ./curity/curity-opa-kong-config.xml:/opt/idsvr/etc/init/curity-opa-kong-config.xml
   kong:
     build: ./kong-image
     container_name: kong
@@ -24,7 +24,7 @@ services:
      - KONG_DATABASE=off
      - KONG_DECLARATIVE_CONFIG=/usr/local/kong/declarative/kong.yml
      - KONG_PLUGINS=bundled,phantom-token,opa
-     - KONG_LOG_LEVEL=debug
+    #  - KONG_LOG_LEVEL=debug
      - KONG_PROXY_ACCESS_LOG=/dev/stdout
      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
      - KONG_PROXY_ERROR_LOG=/dev/stderr
@@ -45,5 +45,6 @@ services:
     ports:
     - "8181:8181"
     volumes:
-      - ./opa/policies/records.rego:/records
-    command: "run --server --addr :8181 --log-level debug records"
+      - ./opa/policies/:/records
+    command: "run --server --addr :8181 /records"
+    # command: "run --server --addr :8181 --log-level debug /records"
