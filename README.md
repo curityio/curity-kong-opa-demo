@@ -6,7 +6,7 @@
 A dockerized demo environment with an API that is proxied by Kong Gateway. Kong acts as an enforcement point and will enforce coarse-grained authorization through the [Kong Phantom Token Plugin](https://github.com/curityio/kong-phantom-token-plugin) and fine grained authorization using the [Kong OPA Plugin](https://github.com/open-policy-agent/contrib/tree/main/kong_api_authz).
 
 ## Documentation
-The environment is documented and described in the [Integrating with Open Policy Agent](https://curity.io/placeholder) article on the Curity website.
+The environment is documented and described in the [API Authorization using Open Policy Agent](https://curity.io/resources/learn/curity-opa-kong-api/) article on the Curity website.
 
 ## Quickstart
 
