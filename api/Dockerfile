@@ -1,4 +1,4 @@
-FROM golang:1.16-alpine AS GO_BUILD
+FROM golang:1.18.5-alpine AS GO_BUILD
 COPY . /server
 WORKDIR /server/server
 RUN go mod download github.com/gorilla/mux

@@ -8,8 +8,7 @@ services:
     - "8443:8443"
     environment:
       PASSWORD: Passw0rd1! ##admin user password
-    # volumes: 
-    # - ./curity/curity-opa-kong-config.xml:/opt/idsvr/etc/init/curity-opa-kong-config.xml
+      # LOGGING_LEVEL: DEBUG
   kong:
     build: ./kong-image
     container_name: kong
@@ -40,7 +39,7 @@ services:
     volumes: 
       - ./api/server/records.json:/app/records.json
   opa:
-    image: openpolicyagent/opa:latest
+    image: openpolicyagent/opa:0.43.0
     container_name: opa
     ports:
     - "8181:8181"
