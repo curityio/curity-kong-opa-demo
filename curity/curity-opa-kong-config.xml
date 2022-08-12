@@ -52,6 +52,7 @@
                 <secret>Password1</secret>
                 <redirect-uris>https://localhost:8080/cb</redirect-uris>
                 <redirect-uris>https://oauth.tools/callback/code</redirect-uris>
+                <redirect-uris>oauth.tools://app/callback/code</redirect-uris>
                 <scope>openid</scope>
                 <scope>address</scope>
                 <scope>email</scope>
@@ -60,7 +61,6 @@
                 <scope>records</scope>
                 <capabilities>
                   <code/>
-                  <implicit/>
                 </capabilities>
                 <user-authentication/>
               </client>

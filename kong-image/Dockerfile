@@ -1,4 +1,4 @@
-FROM kong:latest
+FROM kong:2.8.1-alpine
 
 WORKDIR /usr/kong/
 
@@ -11,6 +11,12 @@ WORKDIR /usr/kong/opa
 
 # switch to root to install rocks in /usr/local 
 USER root
+
+#install dependencies
+RUN apk update && \
+  apk add gcc libc-dev && \
+  luarocks install lua-cjson && \
+  luarocks install lua-resty-jwt
 
 # build and install the plugin
 RUN luarocks make
