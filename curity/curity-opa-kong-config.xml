@@ -2,6 +2,25 @@
   <environments xmlns="https://curity.se/ns/conf/base">
     <environment>
       <base-url>https://idsvr:8443</base-url>
+      <services>
+        <service-role>
+          <id>default</id>
+          <protocol>https</protocol>
+          <ssl-server-keystore>default-admin-ssl-key</ssl-server-keystore>
+          <enable-http-v2>true</enable-http-v2>
+          <endpoints>authentication-service-anonymous</endpoints>
+          <endpoints>authentication-service-authentication</endpoints>
+          <endpoints>authentication-service-registration</endpoints>
+          <endpoints>token-service-anonymous</endpoints>
+          <endpoints>token-service-assisted-token</endpoints>
+          <endpoints>token-service-authorize</endpoints>
+          <endpoints>token-service-introspect</endpoints>
+          <endpoints>token-service-revoke</endpoints>
+          <endpoints>token-service-session</endpoints>
+          <endpoints>token-service-token</endpoints>
+          <endpoints>token-service-userinfo</endpoints>
+        </service-role>
+      </services>
     </environment>
   </environments>
   <profiles xmlns="https://curity.se/ns/conf/base">

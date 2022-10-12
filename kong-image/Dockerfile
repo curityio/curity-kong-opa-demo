@@ -2,15 +2,15 @@ FROM kong:2.8.1-alpine
 
 WORKDIR /usr/kong/
 
+# switch to root to install opa plugin and rocks in /usr/local
+USER root
+
 # Install OPA plugin
 RUN git clone https://github.com/open-policy-agent/contrib &&\
   mv contrib/kong_api_authz /usr/kong/opa/ &&\
   rm -rf contrib
 
 WORKDIR /usr/kong/opa
-
-# switch to root to install rocks in /usr/local 
-USER root
 
 #install dependencies
 RUN apk update && \
