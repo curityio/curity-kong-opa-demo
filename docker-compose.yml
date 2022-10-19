@@ -8,7 +8,7 @@ services:
     - "8443:8443"
     environment:
       PASSWORD: Passw0rd1! ##admin user password
-      # LOGGING_LEVEL: DEBUG
+      LOGGING_LEVEL: DEBUG
   kong:
     build: ./kong-image
     container_name: kong
@@ -23,7 +23,8 @@ services:
      - KONG_DATABASE=off
      - KONG_DECLARATIVE_CONFIG=/usr/local/kong/declarative/kong.yml
      - KONG_PLUGINS=bundled,phantom-token,opa
-    #  - KONG_LOG_LEVEL=debug
+     - KONG_NGINX_HTTP_LUA_SHARED_DICT=phantom-token 10m
+     - KONG_LOG_LEVEL=debug
      - KONG_PROXY_ACCESS_LOG=/dev/stdout
      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
      - KONG_PROXY_ERROR_LOG=/dev/stderr
@@ -39,11 +40,11 @@ services:
     volumes: 
       - ./api/server/records.json:/app/records.json
   opa:
-    image: openpolicyagent/opa:0.43.0
+    image: openpolicyagent/opa:latest
     container_name: opa
     ports:
     - "8181:8181"
     volumes:
       - ./opa/policies/:/records
-    command: "run --server --addr :8181 /records"
-    # command: "run --server --addr :8181 --log-level debug /records"
+    # command: "run --server --addr :8181 /records"
+    command: "run --server --addr :8181 --log-level debug /records"

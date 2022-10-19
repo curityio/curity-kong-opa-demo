@@ -1,4 +1,5 @@
-FROM kong:2.8.1-alpine
+# FROM kong:2.8.1-alpine
+FROM kong:3.0.0-alpine
 
 WORKDIR /usr/kong/
 
@@ -18,12 +19,15 @@ RUN apk update && \
   luarocks install lua-cjson && \
   luarocks install lua-resty-jwt
 
-# build and install the plugin
+# build and install the opa plugin
 RUN luarocks make
 
-RUN cd .. &&\
-  git clone https://github.com/curityio/kong-phantom-token-plugin &&\
-  mv kong-phantom-token-plugin/plugin  /usr/local/share/lua/5.1/kong/plugins/phantom-token
+WORKDIR /usr/kong/
+
+#install phantom-token plugin
+RUN git config --global url."https://".insteadOf git:// && \
+    git config --global advice.detachedHead false && \
+    luarocks install kong-phantom-token 2.0.0
 
 # back to kong user
 USER kong
