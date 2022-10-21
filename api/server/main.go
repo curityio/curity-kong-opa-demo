@@ -53,6 +53,7 @@ func getRecord(w http.ResponseWriter, r *http.Request) {
 	for _, record := range *records {
 		if strconv.Itoa(record.ID) == vars["id"] {
 			json.NewEncoder(w).Encode(record)
+			log.Default().Println("Returning record #" + vars["id"])
 			return
 		}
 	}
