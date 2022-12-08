@@ -27,7 +27,8 @@ services:
      - KONG_DATABASE=off
      - KONG_DECLARATIVE_CONFIG=/usr/local/kong/declarative/kong.yml
      - KONG_PLUGINS=bundled,phantom-token,opa
-    #  - KONG_LOG_LEVEL=debug
+     - KONG_NGINX_HTTP_LUA_SHARED_DICT=phantom-token 10m
+     - KONG_LOG_LEVEL=debug
      - KONG_PROXY_ACCESS_LOG=/dev/stdout
      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
      - KONG_PROXY_ERROR_LOG=/dev/stderr
@@ -51,7 +52,7 @@ services:
         aliases:
           - 'opa-kong-tutorial-api'
   opa:
-    image: openpolicyagent/opa:0.43.0
+    image: openpolicyagent/opa:latest
     container_name: opa
 
     ports:
@@ -70,3 +71,4 @@ networks:
       name: 'curity'
   curity:
     external: true
+
