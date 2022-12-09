@@ -17,7 +17,7 @@ services:
     build: ./kong-image
     container_name: kong
     volumes:
-      - ./kong-image/kong.yml:/usr/local/kong/declarative/kong.yml
+      - ${OPA_KONG_VOLUME_BASE_PATH:-.}/kong-image/configuration/:/usr/local/kong/declarative
     ports:
      - "8000:8000"
      - "8001:8001"
@@ -46,7 +46,7 @@ services:
     container_name: api
     hostname: api
     volumes: 
-      - ./api/server/records.json:/app/records.json
+      - ${OPA_KONG_VOLUME_BASE_PATH:-.}/api/server/data/:/app/data
     networks:
       curity:
         aliases:
@@ -58,7 +58,7 @@ services:
     ports:
     - "8181:8181"
     volumes:
-      - ./opa/policies/:/records
+      - ${OPA_KONG_VOLUME_BASE_PATH:-.}/opa/policies/:/records
     command: "run --server --addr :8181 /records"
     # command: "run --server --addr :8181 --log-level debug /records"
     networks:
@@ -67,7 +67,6 @@ services:
           - 'opa-kong-tutorial-opa'
 networks:
   default:
-    external:
       name: 'curity'
   curity:
     external: true

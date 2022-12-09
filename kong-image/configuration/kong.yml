@@ -3,7 +3,7 @@ _transform: true
 
 services:
 - name: api
-  url: http://api:8080/api/records
+  url: http://opa-kong-tutorial-api:8080/api/records
   routes:
   - name: api-route
     paths:
@@ -11,7 +11,7 @@ services:
   plugins:
   - name: phantom-token
     config:
-      introspection_endpoint: https://idsvr:8443/oauth/v2/oauth-introspect
+      introspection_endpoint: https://opa-kong-tutorial-idsvr:8443/oauth/v2/oauth-introspect
       client_id: gateway-client
       client_secret: Password1
       token_cache_seconds: 900
@@ -20,6 +20,6 @@ services:
   - name: opa
     config:
       server:
-        host: opa
+        host: opa-kong-tutorial-opa
       policy:
         decision: records/allow

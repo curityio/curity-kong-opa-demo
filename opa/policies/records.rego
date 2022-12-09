@@ -12,7 +12,7 @@ allow {
 }
 
 ## Allowed issuer(s)
-issuers = {"https://idsvr:8443/oauth/v2/oauth-anonymous"}
+issuers = {"https://opa-kong-tutorial-idsvr:8443/oauth/v2/oauth-anonymous"}
 
 is_issuer {
   input.token.payload.iss == issuers[issuer]
@@ -42,7 +42,7 @@ is_owner{
 
 ## Method takes a record_id as input to resolve record data
 record_owner(record_id) = http.send({
-  "url": concat("", ["http://api:8080/api/records/", record_id]),
+  "url": concat("", ["http://opa-kong-tutorial-api:8080/api/records/", record_id]),
   "method": "GET",
   "force_cache": true,
   "force_cache_duration_seconds": 86400 # Cache response for 24 hours

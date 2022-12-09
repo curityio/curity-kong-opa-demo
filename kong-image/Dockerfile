@@ -28,5 +28,8 @@ RUN git config --global url."https://".insteadOf git:// && \
     git config --global advice.detachedHead false && \
     luarocks install kong-phantom-token 2.0.0
 
+# Prepare directory for the volume, so that proper permissions are applied
+RUN mkdir /usr/local/kong/declarative && chown kong:kong /usr/local/kong/declarative
+
 # back to kong user
 USER kong

@@ -13,7 +13,7 @@ import (
 )
 
 var records *[]Record
-var file = "./records.json"
+var file = "./data/records.json"
 
 func main() {
 	// readFile()
